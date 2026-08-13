@@ -1,105 +1,221 @@
 
 <img width="1397" height="788" alt="image" src="https://github.com/user-attachments/assets/9add3be2-45f1-4702-afc6-73cd3308c110" />
 Credit Risk Analysis & Prediction Dashboard
+
+An end-to-end Credit Risk Analytics and Prediction project combining PostgreSQL, Python, Machine Learning, and Power BI to analyze loan default patterns, identify high-risk borrower segments, and quantify potential financial exposure.
+
 📌 Project Overview
 
-This project focuses on credit risk analysis using SQL, Python, and Power BI.
-We built an end-to-end pipeline that starts with raw loan applicant data and ends with an interactive dashboard for stakeholders to monitor loan defaults.
+Credit risk assessment requires identifying borrowers who are more likely to default while understanding the business factors contributing to that risk.
+
+This project develops an end-to-end analytics pipeline that transforms raw loan applicant data into:
+
+Risk and default-rate analysis
+Engineered borrower risk features
+Machine learning-based default predictions
+Default probability estimates
+Financial exposure and expected-loss metrics
+An interactive Power BI dashboard for business analysis
+Project Workflow
+
+Raw Loan Data → PostgreSQL → Data Cleaning & Feature Engineering → Python ML Models → Default Probability → Power BI → Business Insights
 
 🛠️ Tech Stack
+Technology	Purpose
+PostgreSQL / pgAdmin4	Data cleaning, transformation and feature engineering
+Python	Data preprocessing and machine learning
+Pandas	Data manipulation and analysis
+Scikit-learn	Model building, preprocessing and evaluation
+Random Forest	Classification model
+XGBoost	Classification model and hyperparameter tuning
+Power BI	Interactive dashboard and business analysis
+DAX	Risk and financial metrics
+📊 Dataset
 
-SQL (PostgreSQL, pgAdmin4) → Data cleaning, transformations, feature engineering.
+The project uses loan applicant data containing information related to:
 
-Python (Pandas, Scikit-learn,→ ML model training & evaluation.
+Applicant demographics
+Income
+Employment length
+Loan amount
+Loan grade
+Interest rate
+Loan intent
+Loan-to-income relationship
+Loan repayment/default status
 
-Power BI → Dashboard for visualization & business insights.
+Two datasets are included in the repository:
 
-🔑 Steps Implemented
-1️⃣ Data Preparation (SQL)
+credit_risk_dataset.csv
+new_credit_risk_dataset.csv
+🔹 1. Data Preparation & Feature Engineering
 
-Imported loan applicant dataset into PostgreSQL.
+The raw loan applicant data was prepared using PostgreSQL.
 
-Cleaned missing values (median imputation for numeric, mode for categorical).
+Data Cleaning
+Handled missing numerical values using median imputation.
+Handled missing categorical values using mode imputation.
+Checked data distributions and default rates across different categories.
+Feature Engineering
 
-Engineered new features:
+Additional risk-related features were created, including:
 
 Loan-to-Income Ratio
+Employment Category
+Age Bands
+Income Bands
+Interest Rate Bands
 
-Employment Category (Binned Employment Length)
+These features were used to better understand borrower characteristics and their relationship with loan defaults.
 
-Age Bands, Income Bands, Interest Rate Bands
+🔹 2. Machine Learning
 
-Verified data distributions and default rates by categories.
+Categorical variables were encoded using OneHotEncoder.
 
-2️⃣ Machine Learning (Python)
+Two classification models were developed:
 
-Encoded categorical variables using OneHotEncoder.
+Random Forest
+XGBoost
+Model Optimization
 
-Built pipelines with Random Forest and XGBoost.
+Hyperparameters were tuned using GridSearchCV to improve model performance, particularly for identifying default cases.
 
-Tuned hyperparameters using GridSearchCV.
+Model Performance
 
-Achieved strong performance:
+The project achieved approximately:
 
-Accuracy: ~93%
+93% Accuracy
+75% Recall for Defaults after XGBoost tuning
 
-Recall (Defaults): ~75% after tuning XGBoost.
+Recall was given particular importance because correctly identifying potential defaulters is critical in a credit-risk setting.
 
-Extracted feature importances (Top predictors: Loan-to-Income, Income, Interest Rate, Loan Amount).
+Feature Importance
 
-Generated predictions + default probabilities for new applicants (scalable to 5,000+ at once).
+The strongest predictors identified by the model included:
 
-3️⃣ Dashboard (Power BI)
+Loan-to-Income Ratio
+Income
+Interest Rate
+Loan Amount
 
-### A. Power BI (Modeling & Visualization)
-- Imported Python-cleaned dataset into Power BI.  
-- Built DAX measures:  
-  - `Default Probability`  
-  - `Actual Loss` (observed defaults)  
-  - `Expected Loss` = Exposure × PD × LGD  
-- Designed an **interactive Credit Risk Dashboard** with slicers for Loan Intent, Loan Grade, and Income Range.
+The trained model can also generate default probabilities for new loan applicants.
 
-### B. Business Insights
-- **Good Loans %:** 78.18%  
-- **Default Rate:** 22%  
-- **Predicted Defaults:** 21.82%  
-- **Expected Loss:** $68.16M  
-- **Total Loan Amount at Risk:** $77M  
-- Top risky purposes: **Debt Consolidation (29%)**, **Medical (27%)**, **Home Improvement (26%)**  
-- Highest risk employment category: **New Employees (0–2 yrs, 30%)**  
+🔹 3. Power BI Credit Risk Dashboard
+
+An interactive Power BI dashboard was developed to translate the analytical and ML results into business-oriented insights.
+
+Key Metrics
+
+The dashboard includes metrics such as:
+
+Good Loans %
+Default Rate
+Predicted Defaults
+Total Loan Amount at Risk
+Expected Loss
+Default Probability
+DAX-Based Risk Metrics
+
+The dashboard includes calculations for:
+
+Default Probability
+Actual Loss
+Expected Loss
+
+Expected Loss is calculated using:
+
+Expected Loss = Exposure × PD × LGD
+
+where:
+
+Exposure = loan exposure
+PD = probability of default
+LGD = loss given default
+Interactive Filters
+
+Users can analyze risk across:
+
+Loan Intent
+Loan Grade
+Income Range
+📈 Key Business Insights
+
+The analysis identified several important credit-risk patterns:
+
+1. Loan Grade
+
+Higher-risk loan grades, particularly F and G, showed substantially higher default rates.
+
+2. Loan Purpose
+
+The highest default rates were observed for:
+
+Debt Consolidation — 29%
+Medical — 27%
+Home Improvement — 26%
+3. Borrower Characteristics
+
+The New Employees (0–2 years) employment category showed a higher default rate of approximately 30%.
+
+4. Financial Risk Factors
+
+The analysis and model identified Loan-to-Income Ratio, Income, Interest Rate and Loan Amount among the strongest predictors of default.
+
+5. Model Comparison
+
+XGBoost provided better recall for default cases after tuning compared with the Random Forest model.
+
+💰 Risk Overview
+
+The Power BI dashboard currently reports:
+
+Metric	Value
+Good Loans	78.18%
+Default Rate	22%
+Predicted Defaults	21.82%
+Total Loan Amount at Risk	$77M
+Expected Loss	$68.16M
+
+These values are based on the current project dataset and dashboard calculations.
+
+🎯 Business Objective
+
+The objective is not only to predict whether a borrower may default, but also to translate predictions into business-oriented risk insights.
+
+The analysis can help stakeholders:
+
+Identify high-risk borrower segments
+Understand major drivers of default
+Monitor default trends across loan categories
+Quantify potential financial exposure
+Support data-driven lending and risk-management decisions
+🖥️ Dashboard Preview
 
 
-📊 Key Insights
-
-Higher Loan Grades (F, G) have default rates > 70%.
-
-Debt Consolidation loans form the largest share of defaults.
-
-Loan-to-Income ratio and Interest Rate are the strongest predictors of default.
-
-Employment Category shows higher defaults among early-career borrowers.
-
-XGBoost model outperformed Random Forest in recall for defaults.
-
-🚀 How to Run
-
-Clone this repo.
-
-Load the SQL scripts in PostgreSQL to clean & prep data.
-
-Run model_training.ipynb in Python to train & evaluate models.
-
-Open the Power BI file (Loan Defaulters Final.pbix) to interact with the dashboard.
 
 
-📌 Next Steps (Future Improvements)
+📁 Repository Contents
+Credit-Risk-Analysis-Prediction-Dashboard/
+│
+├── credit_risk_dataset.csv
+├── new_credit_risk_dataset.csv
+├── Loan Defaulters Final.pbix
+├── Loan Prediction Sys.html
+└── README.md
+File Description
 
-Deploy ML model as a Flask API for real-time scoring.
+credit_risk_dataset.csv
+Original loan applicant dataset used for the analysis.
 
-Connect API to Power BI for live scoring dashboards.
+new_credit_risk_dataset.csv
+Dataset used for generating predictions for new applicants.
 
-Add survival analysis for loan tenure risk.
+Loan Defaulters Final.pbix
+Power BI dashboard containing credit-risk KPIs, visualizations and DAX-based metrics.
 
-Experiment with Neural Networks (TabNet, AutoML) for further improvement.
+Loan Prediction Sys.html
+HTML-based prediction interface/output associated with the loan prediction component.
 
-✨ This project demonstrates the integration of SQL, ML, and BI to deliver a full-stack analytics solution for credit risk management.
+Credit Risk Analysis | SQL | Python | Machine Learning | XGBoost | Random Forest | Power BI | DAX | Business Analytics
+
+This project demonstrates how data can be transformed into risk insights, predictive signals and business-focused decision support through an integrated analytics workflow.
